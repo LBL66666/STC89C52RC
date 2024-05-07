@@ -1,0 +1,568 @@
+C51 COMPILER V9.54   MAIN                                                                  05/07/2024 21:41:04 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(C:\Keil_v5\C51\INC) DEBUG OBJECTE
+                    -XTEND PRINT(.\Listings\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include "LBL.H"
+   2          
+   3          // 2-1 led点亮
+   4          // void main()
+   5          //  {
+   6          
+   7          //     // P2 = 0x55; //0101 0101
+   8          //     // P2 = 0xAA; //1010 1010
+   9          // }
+  10          // //延时100ms
+  11          // void Delay100ms() //@11.0592MHz
+  12          // {
+  13          //     unsigned char i, j;
+  14          
+  15          //     i = 180;
+  16          //     j = 73;
+  17          //     do
+  18          //     {
+  19          //         while (--j)
+  20          //             ;
+  21          //     } while (--i);
+  22          // }
+  23          // //延时500ms
+  24          // void Delay500ms() //@11.0592MHz
+  25          // {
+  26          //     unsigned char i, j, k;
+  27          
+  28          //     _nop_();
+  29          //     i = 4;
+  30          //     j = 129;
+  31          //     k = 119;
+  32          //     do
+  33          //     {
+  34          //         do
+  35          //         {
+  36          //             while (--k)
+  37          //                 ;
+  38          //         } while (--j);
+  39          //     } while (--i);
+  40          // }
+  41          
+  42          // 2-2
+  43          //  void main()
+  44          //  {
+  45          //      while (1)
+  46          //      {
+  47          //          P2 = 0xFE;
+  48          //          //延时
+  49          //          Delay500ms();
+  50          //          P2 = 0xFF;
+  51          //          //延时
+  52          //          Delay100ms();
+  53          //      }
+  54          //  }
+C51 COMPILER V9.54   MAIN                                                                  05/07/2024 21:41:04 PAGE 2   
+
+  55          // 2-3led流水灯
+  56          // void main()
+  57          // {
+  58          //     // int i = 0;//0000 0000为全亮1111 1111为全灭
+  59          //     while (1)
+  60          //     {
+  61          //         P2 = 0xFE; // 1111 1110
+  62          //         Delay1ms(100);
+  63          //         P2 = 0xFD; // 1111 1101
+  64          //         Delay1ms(100);
+  65          //         P2 = 0xFB; // 1111 1011
+  66          //         Delay1ms(100);
+  67          //         P2 = 0xF7; // 1111 0111
+  68          //         Delay1ms(100);
+  69          //         P2 = 0xEF; // 1110 1111
+  70          //         Delay1ms(100);
+  71          //         P2 = 0xDF; // 1011 1111
+  72          //         Delay1ms(100);
+  73          //         P2 = 0xBF; // 1011 1111
+  74          //         Delay1ms(100);
+  75          //         P2 = 0x7F; // 0111 1111
+  76          //         Delay1ms(100);
+  77          //         //     Delay500ms();
+  78          //         //     P2<<1;
+  79          //         //     if(i==0xff){
+  80          //         //         P2 = 0x00;
+  81          //         //     }
+  82          //         // }
+  83          //     }
+  84          // }
+  85          // LED流水灯
+  86          // void main(){
+  87          //     while(1){
+  88          //         if(P2==0xFF){
+  89          //             P2 == 0xFE;
+  90          //         }
+  91          //         P2 = 0xFE;
+  92          //         Delay1ms(200);
+  93          //         P2 = P2 << 1;
+  94          //         P2++;
+  95          
+  96          //     }
+  97          // }
+  98          // 按键点亮LED
+  99          // void main(){
+ 100          
+ 101          //      while(1){
+ 102          //          if(P3_1==0){
+ 103          //             //消除按键抖动
+ 104          //              Delay1ms(20);
+ 105          //              while (P3_1 == 0)
+ 106          //                  ;
+ 107          //              Delay1ms(20);
+ 108          //              P2_0 = ~P2_0;
+ 109          
+ 110          //          }
+ 111          //      }
+ 112          // }
+ 113          
+ 114          // 独立按键控制LED显示二进制
+ 115          //  void main(){
+ 116          
+C51 COMPILER V9.54   MAIN                                                                  05/07/2024 21:41:04 PAGE 3   
+
+ 117          //     while(1){
+ 118          //         if(P3_1==0){
+ 119          //             Delay1ms(20);
+ 120          //             while(P3_1==1){
+ 121          
+ 122          //             }
+ 123          //             Delay1ms(200);
+ 124          //             P2++;
+ 125          //         }
+ 126          //         if (P3_0 == 0)
+ 127          //         {
+ 128          //             Delay1ms(20);
+ 129          //             while (P3_0 == 1)
+ 130          //             {
+ 131          //             }
+ 132          //             Delay1ms(200);
+ 133          //             P2--;
+ 134          //         }
+ 135          //     }
+ 136          // }
+ 137          // 独立按键控制LED流水灯
+ 138          // void main()
+ 139          // {
+ 140          //     P2 = 0xFE; // 1111 1110
+ 141          //     while (1)
+ 142          //     {
+ 143          //         if (P3_0 == 0)
+ 144          //         {
+ 145          //             Delay1ms(20);
+ 146          //             while (P3_0 == 1)
+ 147          //                 ;
+ 148          //             Delay1ms(20);
+ 149          //             Delay1ms(200);
+ 150          //             P2 = P2 << 1;
+ 151          //             if (P2 != 0xFE)
+ 152          //             { // 1111 1110
+ 153          //                 P2++;
+ 154          //             }
+ 155          //         }
+ 156          //         if (P3_1 == 0)
+ 157          //         {
+ 158          //             Delay1ms(20);
+ 159          //             while (P3_1 == 1)
+ 160          //                 ;
+ 161          //             Delay1ms(20);
+ 162          //            Delay1ms(200);
+ 163          //             P2 = P2 >> 1; // 0111 1111
+ 164          //             P2 = P2 + 0x80; // 1111 1111
+ 165          //             if (P2 == 0xFF) // 1111 1110 //1111 1111
+ 166          //             {
+ 167          //                 P2 = 0x7F; //
+ 168          //             }
+ 169          //         }
+ 170          //     }
+ 171          // }
+ 172          
+ 173          // 数码管动态显示
+ 174          //   void main(){
+ 175          
+ 176          //     while(1){
+ 177          //         Nixie(1,1);
+ 178          //         Delay1ms(50);
+C51 COMPILER V9.54   MAIN                                                                  05/07/2024 21:41:04 PAGE 4   
+
+ 179          //         Nixie(2, 2);
+ 180          //         Delay1ms(50);
+ 181          
+ 182          //         Nixie(3, 3);
+ 183          //         Delay1ms(50);
+ 184          
+ 185          //         Nixie(4, 4);
+ 186          //         Delay1ms(50);
+ 187          
+ 188          //         Nixie(5, 5);
+ 189          //         Delay1ms(50);
+ 190          
+ 191          //         Nixie(6, 6);
+ 192          //         Delay1ms(50);
+ 193          
+ 194          //         Nixie(7, 7);
+ 195          //         Delay1ms(50);
+ 196          
+ 197          //         Nixie(8,
+ 198          // LCD函数
+ 199          // void main(){
+ 200          //     LCD_Init();//初始化
+ 201          //     //LCD_ShowChar(1,1,'A');//打印单个字符
+ 202          //     LCD_ShowString(1, 3, "LBLLBL");//打印字符串
+ 203          //     LCD_ShowNum(2, 1, 666, 3);//打印最大65536的数字
+ 204          //     LCD_ShowSignedNum(2, 4, 666, 3);//打印+-32768的数字
+ 205          //     LCD_ShowHexNum(2,1,0xA8,2)//打印十六进制数
+ 206          //     LCD_ShowBinNum(2,4,0xAA,8)//打印二进制数
+ 207          //     while(1){
+ 208          //     }
+ 209          // }
+ 210          // // 读秒
+ 211          // void main()
+ 212          // { int s = 0;
+ 213          //     LCD_Init();
+ 214          
+ 215          //     while(1){
+ 216          //         LCD_ShowNum(1, 1, s, 5);
+ 217          //         Delay1ms(1000);
+ 218          //         s++;
+ 219          
+ 220          //     }
+ 221          // }
+ 222          // 矩阵键盘测试
+ 223          // void main(){
+ 224          //     unsigned char KeyNum ;
+ 225          //     LCD_Init();
+ 226          //     LCD_ShowString(1, 1, "HelloLBL");
+ 227          
+ 228          //     while(1){
+ 229          //         KeyNum = (char)MatrixKey();
+ 230          //         if(KeyNum){
+ 231          //             LCD_ShowNum(2, 1, KeyNum, 2);
+ 232          //         }
+ 233          //     }
+ 234          // }
+ 235          ///////////////////////////////////////////////////////
+ 236          // 矩阵键盘密码锁
+ 237          // void main()
+ 238          // {
+ 239          //     unsigned char KeyNum;
+ 240          //     unsigned int Password;
+C51 COMPILER V9.54   MAIN                                                                  05/07/2024 21:41:04 PAGE 5   
+
+ 241          //     LCD_Init();
+ 242          //     LCD_ShowString(1, 1, "HelloLBL");
+ 243          //     while (1)
+ 244          //     {
+ 245          //         KeyNum = (char)MatrixKey();
+ 246          //         if (KeyNum)
+ 247          //         {
+ 248          //             if (KeyNum <= 10 && Password < 1000) // 限制位数
+ 249          //             {
+ 250          //                 Password = Password * 10;          // 密码左移一位
+ 251          //                 Password = Password + KeyNum % 10; // 密码添加一位
+ 252          //             }
+ 253          //             if (KeyNum == 11)
+ 254          //             {
+ 255          //                 // 确认键
+ 256          //                 if (Password == 2345)
+ 257          //                 { // 比较密码
+ 258          //                     LCD_ShowString(1, 14, "OK ");
+ 259          //                     Password = 0;
+ 260          //                     LCD_ShowNum(2, 1, Password, 4);
+ 261          //                 }
+ 262          //                 else
+ 263          //                 {
+ 264          //                     LCD_ShowString(1, 14, "ERR");
+ 265          //                     Password = 0;
+ 266          //                     LCD_ShowNum(2, 1, Password, 4);
+ 267          //                 }
+ 268          //             }
+ 269          //             if (KeyNum == 12){
+ 270          //                 Password = 0;
+ 271          //                 LCD_ShowNum(2, 1, Password, 4);
+ 272          //             }
+ 273          //                 LCD_ShowNum(2, 1, Password, 4);
+ 274          //         }
+ 275          //     }
+ 276          // }
+ 277          ///////////////////////////////////////////////////////
+ 278          // 定时器
+ 279          // 控制小灯左右循环点亮
+ 280          // unsigned char LEDMode = 0;
+ 281          
+ 282          // void main()
+ 283          // {P2 = 0xFE;
+ 284          //     Timer0Init();
+ 285          //     while (1)
+ 286          //     {
+ 287          //         unsigned char KeyNum = Key();
+ 288          
+ 289          //         if (KeyNum)
+ 290          //         {
+ 291          //             if (KeyNum == 1)
+ 292          //             {
+ 293          //                 LEDMode++;
+ 294          //                 if(LEDMode ==2){
+ 295          //                     LEDMode = 0;
+ 296          //                 }
+ 297          //             }
+ 298          //         }
+ 299          //     }
+ 300          // }
+ 301          // //定时器中断模板
+ 302          // void Timer0_Routine() interrupt 1
+C51 COMPILER V9.54   MAIN                                                                  05/07/2024 21:41:04 PAGE 6   
+
+ 303          // {
+ 304          //     static unsigned int T0Count = 0;
+ 305          //     TL0 = 0x66; // 设置定时初值
+ 306          //     TH0 = 0xFC; // 设置定时初值
+ 307          //     T0Count++;
+ 308          //     if (T0Count >= 200)
+ 309          //     {
+ 310          //         T0Count = 0;
+ 311          //         if (LEDMode == 0){
+ 312          //             P2 = _crol_(P2, 1);
+ 313          
+ 314          //         }else if(LEDMode ==1){
+ 315          //             P2 = _cror_(P2, 1);
+ 316          //         }
+ 317          //     }
+ 318          // }
+ 319          // //定时器___时钟
+ 320          //  unsigned int ms = 0;
+ 321          //  unsigned int Sec = 0;
+ 322          //  unsigned int Min = 0;
+ 323          //  unsigned int Hour = 0;
+ 324          //  unsigned int Day = 0;
+ 325          // void main(){
+ 326          //     LCD_Init();
+ 327          //     Timer0Init();
+ 328          //     LCD_ShowString(2, 1, "  DAY  :  :  :");
+ 329          //     LCD_ShowString(1, 1, "CLOCK:");
+ 330          //     while(1){
+ 331          //         LCD_ShowNum(2, 1, Day, 2);
+ 332          //         LCD_ShowNum(2, 6, Hour, 2);
+ 333          //         LCD_ShowNum(2, 9, Min, 2);
+ 334          //         LCD_ShowNum(2, 12, Sec, 2);
+ 335          //         LCD_ShowNum(2, 15, ms, 2);
+ 336          //     }
+ 337          
+ 338          // }
+ 339          // void Timer0_Routine() interrupt 1{
+ 340          
+ 341          //         TL0 = 0x66; // 设置定时初值
+ 342          //          TH0 = 0xFC; // 设置定时初值
+ 343          //          ms++;
+ 344          //          if(ms==1000){
+ 345          //              Sec++;
+ 346          //              ms = 0;
+ 347          //              if(Sec ==60){
+ 348          //                  Min++;
+ 349          //                  Sec = 0;
+ 350          //                  if(Min==60){
+ 351          //                      Hour++;
+ 352          //                      Min = 0;
+ 353          //                      if(Hour==24){
+ 354          //                          Day++;
+ 355          //                          Hour = 0;
+ 356          //                          if(Day == 99){
+ 357          //                              Day = 0;
+ 358          //                          }
+ 359          //                      }
+ 360          
+ 361          //                  }
+ 362          //              }
+ 363          //          }
+ 364          // }
+C51 COMPILER V9.54   MAIN                                                                  05/07/2024 21:41:04 PAGE 7   
+
+ 365          //
+ 366          // 初始化单片机向电脑发送数据
+ 367          // void Uart_Init(void) // 4800bps@11.0592MHz
+ 368          // {
+ 369          //     PCON &= 0x7F; // 波特率不倍速
+ 370          //     SCON = 0x40;  // 8位数据,可变波特率
+ 371          
+ 372          //     TMOD &= 0x0F; // 清除定时器1模式位
+ 373          //     TMOD |= 0x20; // 设定定时器1为8位自动重装方式
+ 374          //     TL1 = 0xFA;   // 设定定时初值
+ 375          //     TH1 = 0xFA;   // 设定定时器重装值
+ 376          //     ET1 = 0;      // 禁止定时器1中断
+ 377          //     TR1 = 1;      // 启动定时器1
+ 378          // }
+ 379          
+ 380          // //单片机向电脑发送数据
+ 381          // void UART_SendByte(unsigned char Byte){
+ 382          //     SBUF = Byte;
+ 383          //     while(TI==0)
+ 384          //         ;
+ 385          //     TI = 0;
+ 386          // }
+ 387          // void main(){
+ 388          //     Uart_Init();
+ 389          //     while(1){
+ 390          //         UART_SendByte(0x66);
+ 391          //     }
+ 392          // }
+ 393          // //
+ 394          //////////////////////////////////////////////////////////////////////
+ 395          // 初始化电脑向单片机发送数据
+ 396          //  void Uart_Init1(void) // 4800bps@11.0592MHz
+ 397          //  {
+ 398          //      PCON &= 0x7F; // 波特率不倍速
+ 399          //      SCON = 0x50;  // 8位数据,可变波特率
+ 400          
+ 401          //     TMOD &= 0x0F; // 清除定时器1模式位
+ 402          //     TMOD |= 0x20; // 设定定时器1为8位自动重装方式
+ 403          //     TL1 = 0xFA;   // 设定定时初值
+ 404          //     TH1 = 0xFA;   // 设定定时器重装值
+ 405          //     ET1 = 0;      // 禁止定时器1中断
+ 406          //     TR1 = 1;      // 启动定时器1
+ 407          //     EA = 1;
+ 408          //     ES = 1;
+ 409          // }
+ 410          //
+ 411          // void main(){
+ 412          //     Uart_Init1();
+ 413          //     while(1){
+ 414          
+ 415          //     }
+ 416          // }
+ 417          // void UART_Routine(void) interrupt 4{
+ 418          //     if(RI ==1){
+ 419          //         P2 = ~SBUF;
+ 420          //         RI = 0;
+ 421          //     }
+ 422          // }
+ 423          //////////////////////////////////////////////////////////////////////////////////
+ 424          // // LED点阵屏显示图形
+ 425          // sbit RCK = P3 ^ 5; // RCLK
+ 426          // sbit SCK = P3 ^ 6; // SRCLK
+C51 COMPILER V9.54   MAIN                                                                  05/07/2024 21:41:04 PAGE 8   
+
+ 427          // sbit SER = P3 ^ 4; // SER
+ 428          // // 74HC595写入一个字节
+ 429          // void _74HC595_WriteByte(unsigned char Byte)
+ 430          // {
+ 431          //     unsigned char i;
+ 432          //     for (i = 0; i < 8; i++)
+ 433          //     {
+ 434          //         SER = Byte & (0x80 >> i);
+ 435          //         SCK = 1;
+ 436          //         SCK = 0;
+ 437          //     }
+ 438          //     RCK = 1;
+ 439          //     RCK = 0;
+ 440          // }
+ 441          // //LED点阵屏显示一列数据
+ 442          // void MatrixLED_ShowColumn(unsigned char Column, unsigned char Data)
+ 443          // {
+ 444          //     _74HC595_WriteByte(Data);
+ 445          //     P0 = ~(0x80 >> Column);
+ 446          //     Delay1ms(1);
+ 447          //     P0 = 0xFF;
+ 448          // }
+ 449          // void main()
+ 450          // {
+ 451          //     SCK = 0;
+ 452          //     RCK = 0;
+ 453          //     while (1)
+ 454          //     {
+ 455          //         MatrixLED_ShowColumn(0, 0x38);
+ 456          //         MatrixLED_ShowColumn(1, 0x7C);
+ 457          //         MatrixLED_ShowColumn(2, 0x7E);
+ 458          //         MatrixLED_ShowColumn(3, 0x3F);
+ 459          //         MatrixLED_ShowColumn(4, 0x3F);
+ 460          //         MatrixLED_ShowColumn(5, 0x7E);
+ 461          //         MatrixLED_ShowColumn(6, 0x7C);
+ 462          //         MatrixLED_ShowColumn(7, 0x38);
+ 463          //     }
+ 464          // }
+ 465          ////////////////////////////////////////////////////////////////////
+ 466          // LED显示动画LBL
+ 467          unsigned char code Animation[] = {//code关键字会存储到flash
+ 468              0x00,
+ 469              0x00,
+ 470              0x00,
+ 471              0x00,
+ 472              0x00,
+ 473              0x00,
+ 474              0x00,
+ 475              0x00,
+ 476              0xFF,
+ 477              0x01,
+ 478              0x01,
+ 479              0x01,
+ 480              0x01,
+ 481              0x00,
+ 482              0xFF,
+ 483              0x91,
+ 484              0x91,
+ 485              0x69,
+ 486              0x06,
+ 487              0x00,
+ 488              0xFF,
+C51 COMPILER V9.54   MAIN                                                                  05/07/2024 21:41:04 PAGE 9   
+
+ 489              0x01,
+ 490              0x01,
+ 491              0x01,
+ 492              0x01,
+ 493              0x00,
+ 494              0x00,
+ 495              0x00,
+ 496              0x00,
+ 497              0x00,
+ 498              0x00,
+ 499              0x00,
+ 500              0x00,
+ 501          
+ 502          };
+ 503          void main()
+ 504          {
+ 505   1          char i = 0;
+ 506   1          char count = 10;
+ 507   1          while (1)
+ 508   1          {
+ 509   2              if (i >= 25)
+ 510   2              {
+ 511   3                  i = 0;
+ 512   3              }
+ 513   2              MatrixLED_ShowColumn(0, Animation[0+i]);
+ 514   2              MatrixLED_ShowColumn(1, Animation[1 + i]);
+ 515   2              MatrixLED_ShowColumn(2, Animation[2 + i]);
+ 516   2              MatrixLED_ShowColumn(3, Animation[3 + i]);
+ 517   2              MatrixLED_ShowColumn(4, Animation[4 + i]);
+ 518   2              MatrixLED_ShowColumn(5, Animation[5 + i]);
+ 519   2              MatrixLED_ShowColumn(6, Animation[6 + i]);
+ 520   2              MatrixLED_ShowColumn(7, Animation[7 + i]);
+ 521   2      if(count ==10){
+ 522   3          count = 0;
+ 523   3          i++;
+ 524   3      }
+ 525   2      count++;
+ 526   2          }
+ 527   1      }
+ 528          //////////////////////////////////////////////////////////////////////////////////////////
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    233    ----
+   CONSTANT SIZE    =     33    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
